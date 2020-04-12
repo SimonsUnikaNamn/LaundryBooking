@@ -95,7 +95,7 @@ def get_username_from_auth_payload(payload):
 #    token = get_token_auth_header(auth)
 #    payload = validate_token_and_get_decoded_token(token)
 #    username = get_username_from_auth_payload(payload)
-#    insert_booking("2020-04-04", 1000, 2000, username)
+#    insert_booking("2020-04-04", 3000, 4000, username)
 #    print("test")
 #except Exception as e:
 #    print(e)

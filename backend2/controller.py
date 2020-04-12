@@ -1,3 +1,5 @@
+import uuid
+
 import firebase_admin
 from firebase_admin import db
 
@@ -32,10 +34,11 @@ def insert_booking(date, from_timestamp, to_timestamp, username):
         'from': from_timestamp,
         'to': to_timestamp,
         'user': username,
+        'id': str(uuid.uuid4()),
     }
     bookings_for_date.append(insert)
-    booking = db.reference('bookings/{}'.format(date)).set(bookings_for_date)
-    return booking
+    db.reference('bookings/{}'.format(date)).set(bookings_for_date)
+    return bookings_for_date
 
 
 def bookings_with_overlapping_time_span(bookings, from_timespan, to_timestamp):
