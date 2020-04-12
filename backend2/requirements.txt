@@ -1,0 +1,6 @@
+flask==1.1.1
+google-cloud-error-reporting==0.33.0
+pytest
+timestring
+firebase-admin
+python-jose[cryptography]

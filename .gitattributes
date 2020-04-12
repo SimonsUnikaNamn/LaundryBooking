@@ -1,1 +1,3 @@
 frontend/src/auth_config.json filter=git-crypt diff=git-crypt
+backend/firebase/wash-264217-firebase-adminsdk-gidz9-ac12178b64.json filter=git-crypt diff=git-crypt
+backend2/wash-264217-firebase-adminsdk-gidz9-ece7837eb2.json filter=git-crypt diff=git-crypt

@@ -12,6 +12,7 @@ export const Auth0Provider = ({
   ...initOptions
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState();
+  const [accessToken, setAccessToken] = useState();
   const [user, setUser] = useState();
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ export const Auth0Provider = ({
   useEffect(() => {
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
+
       setAuth0(auth0FromHook);
 
       if (window.location.search.includes("code=")) {
@@ -30,8 +32,12 @@ export const Auth0Provider = ({
       const isAuthenticated = await auth0FromHook.isAuthenticated();
 
       setIsAuthenticated(isAuthenticated);
-
+      
       if (isAuthenticated) {
+        const token = await auth0FromHook.getTokenSilently();
+        setAccessToken(token);
+        localStorage.setItem('token', token)
+
         const user = await auth0FromHook.getUser();
         setUser(user);
       }
@@ -70,6 +76,7 @@ export const Auth0Provider = ({
         isAuthenticated,
         user,
         loading,
+        accessToken,
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,

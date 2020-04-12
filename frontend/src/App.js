@@ -1,14 +1,10 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import { useAuth0 } from "./react-auth0-spa";
-import styled from 'styled-components';
-
-const WashDate = styled.input`
-  
-`
+import LoggedIn from "./components/LoggedIn/LoggedIn"
 
 function App() {
-  const { loading, isAuthenticated } = useAuth0();
+  const { loading, isAuthenticated, ...rest } = useAuth0();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -19,7 +15,7 @@ function App() {
       <header>
         <NavBar />
       </header>
-      {isAuthenticated ? <WashDate type="date" /> : null }
+      {isAuthenticated && <LoggedIn/>}
     </div>
   );
 }
