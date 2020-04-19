@@ -37,9 +37,29 @@ def insert_booking(date, from_timestamp, to_timestamp, username):
         'id': str(uuid.uuid4()),
     }
     bookings_for_date.append(insert)
-    db.reference('bookings/{}'.format(date)).set(bookings_for_date)
-    return bookings_for_date
+    return insert_bookings(bookings_for_date, date)
+
+
+def insert_bookings(bookings, date):
+    db.reference('bookings/{}'.format(date)).set(bookings)
+    return bookings
 
 
 def bookings_with_overlapping_time_span(bookings, from_timespan, to_timestamp):
     return list(filter(lambda booking: booking["to"] >= from_timespan and booking["from"] <= to_timestamp, bookings))
+
+
+def delete_booking(booking_id, date, username):
+    bookings = get_bookings_for_date(date)
+    matching_booking = list(filter(lambda booking: 'id' in booking and booking["id"] == booking_id, bookings))
+
+    if len(matching_booking) == 0:
+        raise Exception({"code": "not_found",
+                         "description": f"Booking with id: {booking_id} on date: {date} was not found"}, 404)
+        raise Exception(f"Booking with id: {booking_id} on date: {date} was not found")
+    if matching_booking[0]['user'] != username:
+        raise Exception({"code": "unauthorized",
+                         "description": f"Booking with id: {booking_id} was not made by your user"}, 401)
+
+    non_matching_bookings = list(filter(lambda booking: 'id' not in booking or booking["id"] != booking_id, bookings))
+    return insert_bookings(non_matching_bookings, date)

@@ -1,7 +1,7 @@
 import json
 
 from auth import validate_auth_and_return_decoded_token, get_username_from_auth_payload
-from controller import insert_booking, get_bookings_for_date, get_bookings_for_year
+from controller import insert_booking, get_bookings_for_date, get_bookings_for_year, delete_booking
 
 
 def handle_error(e):
@@ -32,7 +32,7 @@ def insert_booking_request(request):
 
 def get_bookings_for_date_request(request):
     try:
-        payload = validate_auth_and_return_decoded_token(request)
+        validate_auth_and_return_decoded_token(request)
         date = request.args.get('date')
         if date is None:
             return 'Expects query parameter date', 400
@@ -43,10 +43,25 @@ def get_bookings_for_date_request(request):
 
 def get_all_bookings_for_year_request(request):
     try:
-        payload = validate_auth_and_return_decoded_token(request)
+        validate_auth_and_return_decoded_token(request)
         year = request.args.get('year')
         if year is None:
             return 'Expects query parameter year', 400
         return json.dumps(get_bookings_for_year(year))
+    except Exception as e:
+        return handle_error(e)
+
+
+def delete_booking_request(request):
+    try:
+        payload = validate_auth_and_return_decoded_token(request)
+        username = get_username_from_auth_payload(payload)
+        data = request.get_json(silent=True)
+        if 'id' not in data or data['id'] is None or 'date' not in data \
+                or data['date'] is None:
+            return 'Expects id and date data.', 400
+
+        result = delete_booking(data['id'], data['date'], username)
+        return json.dumps(result)
     except Exception as e:
         return handle_error(e)
