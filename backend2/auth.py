@@ -1,9 +1,6 @@
 import json
 from urllib.request import urlopen
-
 from jose import jwt
-
-from controller import insert_booking, delete_booking
 
 API_AUDIENCE = "http://google_api"
 ALGORITHMS = ["RS256"]
@@ -90,12 +87,13 @@ def get_username_from_auth_payload(payload):
     return payload["sub"]
 
 
-try:
-    auth = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlFrTXlORUl4TWtFeU1EVTVOemcyUVRrNU9FTkJSa1k1T1RkQ05rSTJPRGRDT1VORk9UY3dNQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1neHFzZ3hpaS5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWUyNDZiMjE1MTE1ZWEwZWFhMzEyNmJmIiwiYXVkIjpbImh0dHA6Ly9nb29nbGVfYXBpIiwiaHR0cHM6Ly9kZXYtZ3hxc2d4aWkuZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU4NzMxNzQwOCwiZXhwIjoxNTg3NDAzODA4LCJhenAiOiJSelZtcXh5ZnZLYnZRTVo2dkszbVhONTF6T3NFQ2tQVSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.mkI2tZ0OijOtSPZV3Tpdy-dGUgJUDr3pdYOwJhCjOxRxIY6XwYOmd8BXdLSYWL5s_ry1Y9umJaX1QIngeiCiwxGo6DY1HxXvbRLRrfpbwpE5x9B6HlK3Xtk0MUzrKvxmthcxSn5NTvIw92WXz3tvBG8EqRav5LzAHOE1pU4zwaaCyjf0Lb_oTmkUw3P2PPiUQmGSFXBQ1j_QzRAVIxCcLnYfLfsnPayrqpq5TFriD18twa2Pqi9m7HXk3XoeD7KzcSabLBdTIt0wn6EaqLw80zuhqfBJC9JLWxUrxxMq8I7pbbr42ztvytgC5eZHDr0-4BfZtmfkVTKMIc8PzlQ5aw"
-    token = get_token_auth_header(auth)
-    payload = validate_token_and_get_decoded_token(token)
-    username = get_username_from_auth_payload(payload)
-    delete_booking('e3112815-558f-40c9-a9f2-02f2d93cf22b', '2020-04-04', "client-credentials")
-    print("test")
-except Exception as e:
-    print(e)
+#try:
+#    auth = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlFrTXlORUl4TWtFeU1EVTVOemcyUVRrNU9FTkJSa1k1T1RkQ05rSTJPRGRDT1VORk9UY3dNQSJ9.eyJpc3MiOiJodHRwczovL2Rldi1neHFzZ3hpaS5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWUyNDZiMjE1MTE1ZWEwZWFhMzEyNmJmIiwiYXVkIjpbImh0dHA6Ly9nb29nbGVfYXBpIiwiaHR0cHM6Ly9kZXYtZ3hxc2d4aWkuZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU4NzkyNTA0NSwiZXhwIjoxNTg4MDExNDQ1LCJhenAiOiJSelZtcXh5ZnZLYnZRTVo2dkszbVhONTF6T3NFQ2tQVSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.Dlq0sGzGbvY6rCiNG-pCc5WW4nI9iGuzY9sRxk6iJNxUd3EEUfHIyTDSQmN0uzs_8Unsqtxk8TmGKqIobnqLbFg76Twkffszl4UFxnmFB5m8PNs9-qPlzmEMazG5M6NOIbiTwUU1h1uCmgcz5II9uiE_YMbJdqO-WAleAsWGGFHOq5sRAZTI9l6_fSdWc0yRx40agZJ8Mnopdpjt8vsHFDB8hQlE7l0xNrmOdJcnD3aj47-TzftPeGfnDZlimcCLu4fDay-S_NBgXz_Iu0kAe1c8rycr2N6dFxbiRbTUDXntYOpGZV_fKt5dY3MtaA1t8bOkmHXJH_vW0mhbBqEVBA"
+#    token = get_token_auth_header(auth)
+#    payload = validate_token_and_get_decoded_token(token)
+#    username = get_username_from_auth_payload(payload)
+#    data = {"date":"2020-04-26","from_timestamp":"96000","to_timestamp":"114000"}
+#    insert_booking(data['date'], data['from_timestamp'], data['from_timestamp'], username)
+#    print("test")
+#except Exception as e:
+#    print(e)

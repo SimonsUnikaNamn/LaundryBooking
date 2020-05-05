@@ -16,7 +16,7 @@ def get_bookings_for_year(year):
 
 def get_bookings_for_date(date):
     booking = db.reference('bookings/{}'.format(date)).get()
-    return booking
+    return booking if booking is not None else []
 
 
 def insert_booking(date, from_timestamp, to_timestamp, username):

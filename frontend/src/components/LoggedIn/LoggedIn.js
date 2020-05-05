@@ -6,9 +6,15 @@ import { getBookings } from '../../services/bookings'
 import { dateToString } from '../../utils/utils'
 import Bookings from '../Bookings/Bookings'
 import NewBooking from '../NewBooking/NewBooking'
+import './DateCSSOverrider.css';
 
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+		display: inline-block;
+		background-color: white;
+		text-align: left;
+		padding: 10px; 20px;
+`
 
 
 const LoggedIn = () => {
@@ -32,8 +38,8 @@ const LoggedIn = () => {
 
 	return (
 		<>
-			{loading && "Loading..."}
 			<Wrapper>
+				{loading && "Loading..."}
 				<Calendar
 	    		onChange={setDate}
 	    		value={date}
@@ -41,8 +47,10 @@ const LoggedIn = () => {
 	    	/>
 	    	<Bookings
 	    		bookings={bookings}
+	    		chosenDate={date}
     		/>
     		<NewBooking
+    			setBookings={setBookings}
     			chosenDate={date}
     		/>
     	</Wrapper>

@@ -2,6 +2,16 @@ import React from "react";
 import NavBar from "./components/NavBar";
 import { useAuth0 } from "./react-auth0-spa";
 import LoggedIn from "./components/LoggedIn/LoggedIn"
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  text-align: center;
+`
+
+const Title = styled.h1`
+  font-family: "Leckerli One";
+  color: white;
+`
 
 function App() {
   const { loading, isAuthenticated, ...rest } = useAuth0();
@@ -11,12 +21,15 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <>
       <header>
-        <NavBar />
-      </header>
-      {isAuthenticated && <LoggedIn/>}
-    </div>
+          <NavBar />
+        </header>
+      <Wrapper> 
+        <Title>Urtegata 39 vaskeri</Title>
+        {isAuthenticated && <LoggedIn/>}
+      </Wrapper>
+    </>
   );
 }
 

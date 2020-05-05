@@ -12,5 +12,7 @@ def app():
 
 def test_hello_get(app):
     with app.test_request_context():
-        res = main.hello_get(flask.request)
+        request = flask.request
+
+        res = main.insert_booking_request(flask.request)
         assert 'Hello World!' in res

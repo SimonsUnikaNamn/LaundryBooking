@@ -13,12 +13,12 @@ const NewBookingWrapper = styled.div`
 	flex-direction: row;
 `
 
-const makeNewBooking = async (chosenDate, time) => {
+const makeNewBooking = async (chosenDate, time, setBookings) => {
 	const result = await makeBooking(chosenDate, time)
-	debugger
+	setBookings(result)
 }
 
-const NewBooking = ({ chosenDate }) => {
+const NewBooking = ({ chosenDate, setBookings }) => {
 	const [time, setTime] = useState(['16:00', '19:00']);
 	const dateString = dateToString(chosenDate)
 	return (<Wrapper>
@@ -32,7 +32,7 @@ const NewBooking = ({ chosenDate }) => {
 	          locale={"nb-NO"}
 	          required={true}
 	        />
-			<button onClick={() => makeNewBooking(chosenDate, time)}>
+			<button onClick={() => makeNewBooking(chosenDate, time, setBookings)}>
 				Boke
 			</button>
 		</NewBookingWrapper>
