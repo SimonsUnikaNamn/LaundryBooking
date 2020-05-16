@@ -19,7 +19,12 @@ def get_bookings_for_date(date):
     return booking if booking is not None else []
 
 
-def insert_booking(date, from_timestamp, to_timestamp, username):
+def insert_booking(date, from_timestamp, to_timestamp, email, username):
+    if from_timestamp >= to_timestamp:
+        raise Exception({"code": "bad_request",
+                         "description":
+                             "Booking start time is higher or equal to end time"}, 400)
+
     bookings_for_date = get_bookings_for_date(date)
     if bookings_for_date is None:
         bookings_for_date = []
@@ -35,6 +40,7 @@ def insert_booking(date, from_timestamp, to_timestamp, username):
         'to': to_timestamp,
         'user': username,
         'id': str(uuid.uuid4()),
+        'email': email,
     }
     bookings_for_date.append(insert)
     return insert_bookings(bookings_for_date, date)
@@ -46,7 +52,7 @@ def insert_bookings(bookings, date):
 
 
 def bookings_with_overlapping_time_span(bookings, from_timespan, to_timestamp):
-    return list(filter(lambda booking: booking["to"] >= from_timespan and booking["from"] <= to_timestamp, bookings))
+    return list(filter(lambda booking: booking["to"] > from_timespan and booking["from"] < to_timestamp, bookings))
 
 
 def delete_booking(booking_id, date, username):
@@ -56,10 +62,10 @@ def delete_booking(booking_id, date, username):
     if len(matching_booking) == 0:
         raise Exception({"code": "not_found",
                          "description": f"Booking with id: {booking_id} on date: {date} was not found"}, 404)
-        raise Exception(f"Booking with id: {booking_id} on date: {date} was not found")
     if matching_booking[0]['user'] != username:
         raise Exception({"code": "unauthorized",
                          "description": f"Booking with id: {booking_id} was not made by your user"}, 401)
 
     non_matching_bookings = list(filter(lambda booking: 'id' not in booking or booking["id"] != booking_id, bookings))
     return insert_bookings(non_matching_bookings, date)
+

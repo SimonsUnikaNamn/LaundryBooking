@@ -1,0 +1,12 @@
+{
+  "name": "laundry-booking-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "deploy-insert_booking": "gcloud functions deploy insert_booking_request --runtime python37 --trigger-http --allow-unauthenticated",
+    "deploy-get_bookings_for_date": "gcloud functions deploy get_bookings_for_date_request --runtime python37 --trigger-http --allow-unauthenticated",
+    "deploy-get_all_bookings_for_year": "gcloud functions deploy get_all_bookings_for_year_request --runtime python37 --trigger-http --allow-unauthenticated",
+    "deploy-delete_booking": "gcloud functions deploy delete_booking_request --runtime python37 --trigger-http --allow-unauthenticated",
+    "deploy": "yarn deploy-insert_booking && yarn deploy-get_bookings_for_date && yarn deploy-get_all_bookings_for_year && yarn deploy-delete_booking"
+  }
+}
