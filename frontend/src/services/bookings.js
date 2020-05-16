@@ -1,4 +1,4 @@
-import { hourAndMinuteToMinuteOfDay, dateToString } from '../utils/utils'
+import { dateToString } from '../utils/utils'
 
 const prefix = process.env.NODE_ENV === 'production' ? 'https://us-central1-wash-264217.cloudfunctions.net' : ''
 
@@ -14,12 +14,16 @@ export const deleteBooking = async (date, bookingId) => {
 	return deleteJSON(url, data)
 }
 
-export const makeBooking = async (date, fromTo) => {
+export const makeBooking = async (date, from, to, email) => {
 	const dateString = dateToString(date)
-	const from = hourAndMinuteToMinuteOfDay(fromTo[0])
-	const to = hourAndMinuteToMinuteOfDay(fromTo[1])
-	const data = { date: dateString, from_timestamp: from, to_timestamp: to }
+	const data = { date: dateString, from_timestamp: from, to_timestamp: to, email: email }
 	return await postJSON('/insert_booking_request', data)
+}
+
+const handleError = async (response) => {
+    const responseJson = await response.json()
+    alert(`En feil uppstod: ${JSON.stringify(responseJson)}. Hvis dette ikke ger mening, vennligst maile dette till simonanders@gmail.com`)
+    throw new Error(`Network response was not ok: ${responseJson}`);
 }
 
 const postJSON = async (url, data) => {
@@ -27,6 +31,7 @@ const postJSON = async (url, data) => {
 	const response = await fetch(prefix + url, {
     method: 'POST',
     mode: 'cors',
+    credentials: 'include',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -34,7 +39,7 @@ const postJSON = async (url, data) => {
     body: JSON.stringify(data)
   });
 	if (!response.ok) {
-    throw new Error('Network response was not ok');
+    handleError(response);
   }	
 	return response.json();
 }
@@ -44,13 +49,14 @@ const getJSON = async (url) => {
 	const response = await fetch(prefix + url, {
     method: 'GET',
     mode: 'cors',
+    credentials: 'include',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/javascript',
     },
   });
 	if (!response.ok) {
-    throw new Error('Network response was not ok');
+    handleError(response);
   }	
 	return response.json();
 }
@@ -60,6 +66,7 @@ const deleteJSON = async (url, data) => {
 	const response = await fetch(prefix + url, {
     method: 'DELETE',
     mode: 'cors',
+    credentials: 'include',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -67,7 +74,7 @@ const deleteJSON = async (url, data) => {
     body: JSON.stringify(data)
   });
 	if (!response.ok) {
-    throw new Error('Network response was not ok');
+    handleError(response);
   }	
 	return response.json();
 }
@@ -75,6 +82,7 @@ const deleteJSON = async (url, data) => {
 const getToken = () => {
 	const token = localStorage.getItem('token')
 	if(!token) {
+    alert(`Er du pålogged?`)
 		throw new Error("Localstorage item token not found, have you logged in?")
 	}
 

@@ -7,6 +7,7 @@ import { dateToString } from '../../utils/utils'
 import Bookings from '../Bookings/Bookings'
 import NewBooking from '../NewBooking/NewBooking'
 import './DateCSSOverrider.css';
+import loadingStore from '../../stores/loading/loading'
 
 
 const Wrapper = styled.div`
@@ -20,7 +21,8 @@ const Wrapper = styled.div`
 const LoggedIn = () => {
 	const [date, setDate] = useState(new Date());
 	const [bookings, setBookings] = useState([]);
-	const [loading, setLoading] = useState(false);
+
+  const setLoading = loadingStore(state => state.setLoading)
 
 	const updateBookings = async (date) => {
 		const yearMonthDay = dateToString(date)
@@ -38,8 +40,7 @@ const LoggedIn = () => {
 
 	return (
 		<>
-			<Wrapper>
-				{loading && "Loading..."}
+			<Wrapper>	
 				<Calendar
 	    		onChange={setDate}
 	    		value={date}
@@ -48,6 +49,7 @@ const LoggedIn = () => {
 	    	<Bookings
 	    		bookings={bookings}
 	    		chosenDate={date}
+    			setBookings={setBookings}
     		/>
     		<NewBooking
     			setBookings={setBookings}

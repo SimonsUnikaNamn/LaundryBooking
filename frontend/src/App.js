@@ -2,10 +2,13 @@ import React from "react";
 import NavBar from "./components/NavBar";
 import { useAuth0 } from "./react-auth0-spa";
 import LoggedIn from "./components/LoggedIn/LoggedIn"
+import LoadingModal from "./components/LoadingModal/LoadingModal"
 import styled from 'styled-components';
+import loadingStore from './stores/loading/loading'
 
 const Wrapper = styled.div`
   text-align: center;
+  margin-bottom: 40px;
 `
 
 const Title = styled.h1`
@@ -14,14 +17,17 @@ const Title = styled.h1`
 `
 
 function App() {
-  const { loading, isAuthenticated, ...rest } = useAuth0();
+  const { loading, isAuthenticated } = useAuth0();
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  const globalLoading = loadingStore(state => state.loading)
+
   return (
     <>
+      <LoadingModal loading={globalLoading} />
       <header>
           <NavBar />
         </header>
