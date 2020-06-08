@@ -9,7 +9,7 @@ client = google.cloud.logging.Client()
 client.setup_logging()
 
 standard_headers = {
-        'Access-Control-Allow-Origin': 'https://wash-264217.appspot.com',
+        'Access-Control-Allow-Origin': 'https://urtevask.no',
         'Access-Control-Allow-Credentials': 'true',
     }
 
@@ -26,7 +26,7 @@ def handle_error(e):
 
 def handle_options():
     headers = {
-        'Access-Control-Allow-Origin': 'https://wash-264217.appspot.com',
+        'Access-Control-Allow-Origin': 'https://urtevask.no',
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
         'Access-Control-Allow-Headers': 'Content-Type,Authorization',
         'Access-Control-Allow-Credentials': 'true',

@@ -1,6 +1,6 @@
 import { dateToString } from '../utils/utils'
 
-const prefix = process.env.NODE_ENV === 'production' ? 'https://us-central1-wash-264217.cloudfunctions.net' : ''
+const prefix = process.env.NODE_ENV === 'production' ? 'https://europe-west1-wash-264217.cloudfunctions.net' : ''
 
 export const getBookings = async (date) => {
 		const url = `/get_bookings_for_date_request?date=${date}`
