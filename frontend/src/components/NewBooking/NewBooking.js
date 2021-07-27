@@ -14,7 +14,7 @@ const FormWrapper = styled.form`
 	display: flex;
 	flex-direction: column
 `
-const TimePickWrapper = styled.form`
+const TimePickWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 10px;
@@ -67,7 +67,7 @@ const NewBooking = ({ chosenDate, setBookings }) => {
 		>
 			<TimePickWrapper>
 				<TimeLabelWrapper>
-					<TimePickLabel for="from">Fra</TimePickLabel>
+					<TimePickLabel htmlFor="from">Fra</TimePickLabel>
 					<TimePick 
 						type="time"
 						id="from"
@@ -80,7 +80,7 @@ const NewBooking = ({ chosenDate, setBookings }) => {
 				</TimeLabelWrapper>
 
 				<TimeLabelWrapper>
-					<TimePickLabel for="to">Til</TimePickLabel>
+					<TimePickLabel htmlFor="to">Til</TimePickLabel>
 					<TimePick 
 						type="time"
 						id="to"

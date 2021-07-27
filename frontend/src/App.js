@@ -18,12 +18,12 @@ const Title = styled.h1`
 
 function App() {
   const { loading, isAuthenticated } = useAuth0();
+  const globalLoading = loadingStore(state => state.loading)
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const globalLoading = loadingStore(state => state.loading)
 
   return (
     <>

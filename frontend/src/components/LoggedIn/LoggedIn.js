@@ -24,18 +24,18 @@ const LoggedIn = () => {
 
   const setLoading = loadingStore(state => state.setLoading)
 
-	const updateBookings = async (date) => {
-		const yearMonthDay = dateToString(date)
-		setLoading(true)
-		const newBookings = await getBookings(yearMonthDay);
-		setBookings(newBookings)
-		setLoading(false)
-	}
 	useEffect(
   	() => {
+		const updateBookings = async (date) => {
+			const yearMonthDay = dateToString(date)
+			setLoading(true)
+			const newBookings = await getBookings(yearMonthDay);
+			setBookings(newBookings)
+			setLoading(false)
+		}
     	updateBookings(date);
 		},
-  	[date],
+  	[date, setLoading],
 	);
 
 	return (

@@ -52,7 +52,7 @@ const bookingRow = (booking, loggedInUser, chosenDate, setLoading, setBookings) 
 	const bookingEmail = booking['email']
 
 	return (
-		<BookingRow>
+		<BookingRow key={bookingId}>
 			<BookingTimeAndBy>
 				<div>Booking {`${fromString} - ${toString}`}</div>
 				<BookingBy>av {`${bookingEmail}`}</BookingBy>

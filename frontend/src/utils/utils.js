@@ -9,7 +9,7 @@ const twoDigit = number => ("0" + number).slice(-2);
 
 const minutesPerHour = 60
 export const minuteOfDayToHourAndMinute = (minuteOfDay) => {
-	const hour = Math.ceil(minuteOfDay/minutesPerHour)
+	const hour = Math.floor(minuteOfDay/minutesPerHour)
 	const minutes = minuteOfDay%minutesPerHour
 	return {hour, minutes}
 }
